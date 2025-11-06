@@ -7,6 +7,13 @@ interface JumboTronProps {
   buttonTarget?: string;
 }
 
+const scrollTo = (id: string) => {
+  const elementToScroll = document.getElementById(id);
+  if (elementToScroll) {
+    elementToScroll.scrollIntoView({ behavior: "smooth" });
+  }
+};
+
 export const CustomJumboTron = ({
   title,
   subtitle,
@@ -14,16 +21,20 @@ export const CustomJumboTron = ({
   buttonTarget,
 }: JumboTronProps) => {
   return (
-    <section className="py-16 px-4 lg:px-8 bg-muted/30">
+    <section className="py-10 px-4 lg:px-8 bg-muted/30">
       <div className="container mx-auto text-center">
-        <h1 className="text-5xl lg:text-7xl font-light tracking-tight mb-6">
+        <h1 className="text-2xl lg:text-5xl font-light tracking-tight mb-6 font-montserrat">
           {title}
         </h1>
         <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
           {subtitle}
         </p>
         {buttonText && buttonTarget && (
-          <Button size="lg" className="rounded-full px-8">
+          <Button
+            size="lg"
+            className="rounded-full px-8"
+            onClick={() => scrollTo(buttonTarget)}
+          >
             {buttonText}
           </Button>
         )}

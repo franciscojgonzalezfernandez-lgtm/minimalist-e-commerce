@@ -14,7 +14,7 @@ const CustomHeader = () => {
               <Menu className="h-5 w-5" />
             </Button>
             <h1 className="text-xl font-semibold tracking-tight">
-              TESLO STYLE
+              TESLA STYLE
             </h1>
           </div>
 
