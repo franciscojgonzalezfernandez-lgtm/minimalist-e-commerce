@@ -1,5 +1,9 @@
-import { Button } from "@/components/ui/button";
+import { CustomJumboTron } from "@/shop/components/CustomJumboTron";
 
 export const HomePage = () => {
-  return <Button>Hola mundo</Button>;
+  return (
+    <>
+      <CustomJumboTron />
+    </>
+  );
 };
