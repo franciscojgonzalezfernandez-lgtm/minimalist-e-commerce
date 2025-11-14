@@ -4,6 +4,7 @@ import { Filter, Grid, List } from "lucide-react";
 import { useState } from "react";
 import FilterSidebar from "./FiltersSideBar";
 import ProductCard from "./ProductCard";
+import { useSearchParams } from "react-router";
 
 interface Props {
   products: Product[];
@@ -11,7 +12,23 @@ interface Props {
 
 export const ProductsGrid = ({ products }: Props) => {
   const [showFilters, setShowFilters] = useState(false);
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const viewMode = searchParams.get("viewMode") || "grid";
+
+  const setViewMode = (viewMode: string) => {
+    if (viewMode == "list") {
+      setSearchParams((prev) => {
+        prev.set("viewMode", "list");
+        return prev;
+      });
+    } else {
+      setSearchParams((prev) => {
+        prev.set("viewMode", "grid");
+        return prev;
+      });
+    }
+  };
 
   return (
     <section className="py-12 px-4 lg:px-8">
@@ -80,7 +97,7 @@ export const ProductsGrid = ({ products }: Props) => {
           )}
 
           {/* Products Grid */}
-          {/* <div className="flex-1">
+          <div className="flex-1">
             <div
               className={
                 viewMode === "grid"
@@ -88,7 +105,7 @@ export const ProductsGrid = ({ products }: Props) => {
                   : "space-y-4"
               }
             >
-              {currentProducts.map((product) => (
+              {products.map((product) => (
                 <ProductCard
                   key={product.id}
                   id={product.id}
@@ -99,7 +116,7 @@ export const ProductsGrid = ({ products }: Props) => {
                 />
               ))}
             </div>
-          </div> */}
+          </div>
         </div>
       </div>
     </section>
