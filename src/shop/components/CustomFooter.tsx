@@ -1,10 +1,12 @@
+import { CustomLogo } from "./CustomLogo";
+
 export const CustomFooter = () => {
   return (
     <footer className="border-t py-12 px-4 lg:px-8 mt-16">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="font-semibold mb-4">TESLA STYLE</h3>
+            <CustomLogo />
             <p className="text-sm text-muted-foreground">
               Clothes inspired in the minimalist & innovation of Tesla
             </p>
