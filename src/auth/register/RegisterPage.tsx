@@ -23,7 +23,7 @@ export const RegisterPage = ({
                 </p>
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="email">Name</Label>
+                <Label htmlFor="name">Name</Label>
                 <Input
                   id="name"
                   type="text"
