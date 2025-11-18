@@ -21,7 +21,6 @@ interface SidebarProps {
 
 const AdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
   const { pathname } = useLocation();
-  console.log({ pathname });
   const menuItems = [
     { icon: Home, label: "Dashboard", to: "/admin" },
     { icon: BarChart3, label: "Products", to: "/admin/products" },
