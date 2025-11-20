@@ -21,6 +21,15 @@ interface SidebarProps {
 
 const AdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
   const { pathname } = useLocation();
+
+  const isactiveRoute = (to: string) => {
+    if (pathname.includes("/admin/products") && to == "/admin/products") {
+      return true;
+    }
+
+    return to === pathname;
+  };
+
   const menuItems = [
     { icon: Home, label: "Dashboard", to: "/admin" },
     { icon: BarChart3, label: "Products", to: "/admin/products" },
@@ -59,7 +68,7 @@ const AdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
                 <Link
                   to={item.to || "/admin"}
                   className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 group ${
-                    item.to === pathname
+                    isactiveRoute(item.to || "")
                       ? "bg-blue-50 text-blue-600 border-r-2 border-blue-600"
                       : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                   }`}
