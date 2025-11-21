@@ -24,11 +24,10 @@ const productData = {
     { name: "Gray", value: "#A0A0A0" },
   ],
   sizes: ["XS", "S", "M", "L", "XL", "XXL"],
-  stock: 8, // Puedes cambiar esto para probar: 0 = agotado, 1-5 = pocas unidades, >5 = disponible
+  stock: 8,
 };
 
 export const ProductPage = () => {
-  const [selectedImage, setSelectedImage] = useState(0);
   const [selectedColor, setSelectedColor] = useState(0);
   const [selectedSize, setSelectedSize] = useState("M");
   const [quantity, setQuantity] = useState(1);
@@ -93,7 +92,7 @@ export const ProductPage = () => {
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-50 rounded-full">
                   <div className="w-2 h-2 rounded-full bg-green-500" />
                   <span className="text-sm font-medium text-green-700">
-                    In stock
+                    {quantity} in stock
                   </span>
                 </div>
               )}
@@ -182,7 +181,7 @@ export const ProductPage = () => {
             <Button
               size="lg"
               className="w-full bg-black hover:bg-gray-800 text-white h-14 text-base disabled:bg-gray-300 disabled:cursor-not-allowed"
-              disabled={productData.stock === 0}
+              disabled={productData.stock === 0 || quantity > productData.stock}
             >
               {productData.stock === 0
                 ? "Out of stock"
