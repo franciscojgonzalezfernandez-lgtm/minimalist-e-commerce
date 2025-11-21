@@ -4,13 +4,14 @@ import { Filter, Grid, List } from "lucide-react";
 import { useState } from "react";
 import FilterSidebar from "./FiltersSideBar";
 import ProductCard from "./ProductCard";
-import { useSearchParams } from "react-router";
+import { Link, useSearchParams } from "react-router";
 
 interface Props {
   products: Product[];
+  id?: string;
 }
 
-export const ProductsGrid = ({ products }: Props) => {
+export const ProductsGrid = ({ products, id = "products" }: Props) => {
   const [showFilters, setShowFilters] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -31,7 +32,7 @@ export const ProductsGrid = ({ products }: Props) => {
   };
 
   return (
-    <section className="py-12 px-4 lg:px-8">
+    <section className="py-12 px-4 lg:px-8" id={id}>
       <div className="container mx-auto">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-4">
@@ -106,14 +107,15 @@ export const ProductsGrid = ({ products }: Props) => {
               }
             >
               {products.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  id={product.id}
-                  name={product.name}
-                  price={product.price}
-                  image={product.image}
-                  category={product.category}
-                />
+                <Link to={`/product/${product.id}`} key={product.id}>
+                  <ProductCard
+                    id={product.id}
+                    name={product.name}
+                    price={product.price}
+                    image={product.image}
+                    category={product.category}
+                  />
+                </Link>
               ))}
             </div>
           </div>

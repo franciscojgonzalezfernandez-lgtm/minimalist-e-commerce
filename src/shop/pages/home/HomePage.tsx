@@ -13,13 +13,9 @@ export const HomePage = () => {
         title="All products"
         subtitle="Minimalist and elegant clothes inspired in the futuristic design of Tesla. Premium quality for an atemporal style"
         buttonText="See all the products"
-        buttonTarget="aqui"
+        buttonTarget="productGrid"
       />
-
-      <div className="h-30" id="aqui">
-        Aquí
-      </div>
-      <ProductsGrid products={products} />
+      <ProductsGrid products={products} id="productGrid" />
       <CustomPagination totalPages={totalPages} />
       <CustomFooter />
     </>

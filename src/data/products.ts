@@ -5,6 +5,7 @@ import greySweatshirt from "@/assets/product-grey-sweatshirt.jpg";
 import blackJacket from "@/assets/product-black-jacket.jpg";
 import whiteCap from "@/assets/product-white-cap.jpg";
 import blackBackpack from "@/assets/product-black-backpack.jpg";
+import myBlackTshirt from "@/assets/black-tshirt-1.png";
 
 export interface Product {
   id: string;
@@ -22,7 +23,7 @@ export const products: Product[] = [
     id: "1",
     name: "Camiseta Tesla Negro",
     price: 35,
-    image: blackTshirt,
+    image: myBlackTshirt,
     category: "Camisetas",
     description:
       "Camiseta de algodón premium con diseño minimalista inspirado en Tesla.",

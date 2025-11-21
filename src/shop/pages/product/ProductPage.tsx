@@ -1,3 +1,207 @@
+"use client";
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, Minus, Plus } from "lucide-react";
+import { Link } from "react-router";
+import image1 from "@/assets/black-tshirt-1.png";
+import image2 from "@/assets/black-tshirt-2.png";
+import image3 from "@/assets/black-tshirt-3.png";
+import image4 from "@/assets/black-tshirt-4.png";
+import { CustomPhotoGallery } from "@/shop/components/CustomPhotoGallery";
+
+// Datos de ejemplo - en producción vendrían de tu API o base de datos
+const productData = {
+  id: "1",
+  name: "Tesla Essential T-Shirt",
+  price: 35,
+  description:
+    "Minimalist and elegant t-shirt inspired in the futuristic design of Tesla. Premium quality cotton for an atemporal style. Comfortable fit perfect for everyday wear.",
+  images: [image1, image2, image3, image4],
+  colors: [
+    { name: "Black", value: "#000000" },
+    { name: "White", value: "#FFFFFF" },
+    { name: "Gray", value: "#A0A0A0" },
+  ],
+  sizes: ["XS", "S", "M", "L", "XL", "XXL"],
+  stock: 8, // Puedes cambiar esto para probar: 0 = agotado, 1-5 = pocas unidades, >5 = disponible
+};
+
 export const ProductPage = () => {
-  return <div>ProductPage</div>;
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [selectedColor, setSelectedColor] = useState(0);
+  const [selectedSize, setSelectedSize] = useState("M");
+  const [quantity, setQuantity] = useState(1);
+
+  const handleQuantityChange = (delta: number) => {
+    const newQuantity = quantity + delta;
+    if (newQuantity >= 1 && newQuantity <= 99) {
+      setQuantity(newQuantity);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Back button */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+        >
+          <ChevronLeft className="h-4 w-4" />
+          Back to products
+        </Link>
+      </div>
+
+      {/* Product detail */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+          {/* Image gallery */}
+          <div className="space-y-4">
+            <CustomPhotoGallery
+              productName={productData.name}
+              images={productData.images}
+            />
+          </div>
+
+          {/* Product info */}
+          <div className="space-y-8">
+            <div>
+              <h1 className="text-4xl font-bold text-balance mb-3">
+                {productData.name}
+              </h1>
+              <p className="text-3xl font-semibold">${productData.price}</p>
+            </div>
+
+            {/* Stock indicator */}
+            <div>
+              {productData.stock === 0 ? (
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-full">
+                  <div className="w-2 h-2 rounded-full bg-gray-400" />
+                  <span className="text-sm font-medium text-gray-600">
+                    Out of stock
+                  </span>
+                </div>
+              ) : productData.stock <= 5 ? (
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-orange-50 rounded-full">
+                  <div className="w-2 h-2 rounded-full bg-orange-500" />
+                  <span className="text-sm font-medium text-orange-700">
+                    Only {productData.stock} left
+                  </span>
+                </div>
+              ) : (
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-50 rounded-full">
+                  <div className="w-2 h-2 rounded-full bg-green-500" />
+                  <span className="text-sm font-medium text-green-700">
+                    In stock
+                  </span>
+                </div>
+              )}
+            </div>
+
+            <p className="text-muted-foreground leading-relaxed">
+              {productData.description}
+            </p>
+
+            {/* Color selector */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-medium">Color</label>
+                <span className="text-sm text-muted-foreground">
+                  {productData.colors[selectedColor].name}
+                </span>
+              </div>
+              <div className="flex gap-3">
+                {productData.colors.map((color, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setSelectedColor(index)}
+                    className={`w-12 h-12 rounded-full border-2 transition-all ${
+                      selectedColor === index
+                        ? "border-black scale-110"
+                        : "border-gray-300 hover:border-gray-400"
+                    }`}
+                    style={{ backgroundColor: color.value }}
+                    aria-label={color.name}
+                  >
+                    {color.value === "#FFFFFF" && (
+                      <span className="sr-only">White</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Size selector */}
+            <div className="space-y-4">
+              <label className="text-sm font-medium">Size</label>
+              <div className="grid grid-cols-6 gap-2">
+                {productData.sizes.map((size) => (
+                  <button
+                    key={size}
+                    onClick={() => setSelectedSize(size)}
+                    className={`py-3 text-sm font-medium border rounded-lg transition-colors ${
+                      selectedSize === size
+                        ? "bg-black text-white border-black"
+                        : "bg-white text-foreground border-gray-300 hover:border-black"
+                    }`}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Quantity selector */}
+            <div className="space-y-4">
+              <label className="text-sm font-medium">Quantity</label>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center border border-gray-300 rounded-lg">
+                  <button
+                    onClick={() => handleQuantityChange(-1)}
+                    disabled={quantity <= 1}
+                    className="p-3 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed"
+                    aria-label="Decrease quantity"
+                  >
+                    <Minus className="h-4 w-4" />
+                  </button>
+                  <span className="px-6 font-medium">{quantity}</span>
+                  <button
+                    onClick={() => handleQuantityChange(1)}
+                    disabled={quantity >= 99}
+                    className="p-3 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed"
+                    aria-label="Increase quantity"
+                  >
+                    <Plus className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Add to cart button */}
+            <Button
+              size="lg"
+              className="w-full bg-black hover:bg-gray-800 text-white h-14 text-base disabled:bg-gray-300 disabled:cursor-not-allowed"
+              disabled={productData.stock === 0}
+            >
+              {productData.stock === 0
+                ? "Out of stock"
+                : `Add to cart — $${productData.price * quantity}`}
+            </Button>
+
+            {/* Product details */}
+            <div className="pt-8 border-t border-gray-200 space-y-4">
+              <h3 className="font-medium">Product Details</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>• 100% premium cotton</li>
+                <li>• Machine washable</li>
+                <li>• Classic fit</li>
+                <li>• Imported</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
