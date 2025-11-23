@@ -13,7 +13,7 @@ import { CustomPhotoGallery } from "@/shop/components/CustomPhotoGallery";
 // Datos de ejemplo - en producción vendrían de tu API o base de datos
 const productData = {
   id: "1",
-  name: "Tesla Essential T-Shirt",
+  name: "Tesla Essential T-Shirt del cris",
   price: 35,
   description:
     "Minimalist and elegant t-shirt inspired in the futuristic design of Tesla. Premium quality cotton for an atemporal style. Comfortable fit perfect for everyday wear.",
@@ -90,7 +90,7 @@ export const ProductPage = () => {
                 </div>
               ) : (
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-50 rounded-full">
-                  <div className="w-2 h-2 rounded-full bg-green-500" />
+                  <div className="w-4 h-2 rounded-full bg-green-500" />
                   <span className="text-sm font-medium text-green-700">
                     {quantity} in stock
                   </span>
