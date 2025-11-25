@@ -64,12 +64,10 @@ const CustomHeader = () => {
               Women
             </Link>
             <Link
-              to="gender/kids"
+              to="gender/kid"
               className={cn(
                 `text-sm font-medium transition-colors hover:text-primary`,
-                gender !== "kids"
-                  ? ""
-                  : "underline underline-offset-4 font-bold"
+                gender !== "kid" ? "" : "underline underline-offset-4 font-bold"
               )}
             >
               Kids

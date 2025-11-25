@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import type { Product } from "@/data/products";
+import type { Product } from "@/interfaces/Product";
 import { Filter, Grid, List } from "lucide-react";
 import { useState } from "react";
 import FilterSidebar from "./FiltersSideBar";
@@ -9,9 +9,10 @@ import { Link, useSearchParams } from "react-router";
 interface Props {
   products: Product[];
   id?: string;
+  count: number;
 }
 
-export const ProductsGrid = ({ products, id = "products" }: Props) => {
+export const ProductsGrid = ({ products, id = "products", count }: Props) => {
   const [showFilters, setShowFilters] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -37,9 +38,7 @@ export const ProductsGrid = ({ products, id = "products" }: Props) => {
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-4">
             <h2 className="text-3xl font-light">Productos</h2>
-            <span className="text-muted-foreground">
-              ({products.length} productos)
-            </span>
+            <span className="text-muted-foreground">({count} productos)</span>
           </div>
 
           <div className="flex items-center space-x-2">
@@ -110,10 +109,11 @@ export const ProductsGrid = ({ products, id = "products" }: Props) => {
                 <Link to={`/product/${product.id}`} key={product.id}>
                   <ProductCard
                     id={product.id}
-                    name={product.name}
+                    name={product.title}
                     price={product.price}
-                    image={product.image}
-                    category={product.category}
+                    image={product.images[0]}
+                    category={product.gender}
+                    sizes={product.sizes}
                   />
                 </Link>
               ))}
