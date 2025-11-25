@@ -37,8 +37,8 @@ export const ProductsGrid = ({ products, id = "products", count }: Props) => {
       <div className="container mx-auto">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-4">
-            <h2 className="text-3xl font-light">Productos</h2>
-            <span className="text-muted-foreground">({count} productos)</span>
+            <h2 className="text-3xl font-light">Products</h2>
+            <span className="text-muted-foreground">({count} products)</span>
           </div>
 
           <div className="flex items-center space-x-2">

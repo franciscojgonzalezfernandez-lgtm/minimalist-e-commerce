@@ -39,7 +39,7 @@ export const CustomFooter = () => {
           </div>
 
           <div>
-            <h4 className="font-medium mb-4">Ayuda</h4>
+            <h4 className="font-medium mb-4">Help</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <a href="#" className="hover:text-foreground">
@@ -65,7 +65,7 @@ export const CustomFooter = () => {
           </div>
 
           <div>
-            <h4 className="font-medium mb-4">Empresa</h4>
+            <h4 className="font-medium mb-4">Company</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <a href="#" className="hover:text-foreground">
