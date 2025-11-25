@@ -9,7 +9,7 @@ export const useProducts = () => {
   const limit = Number(urlParams.get("limit")) || 9;
   const page = urlParams.get("page") || 1;
   const offset = (Number(page) - 1) * Number(limit);
-  const sizes = urlParams.get("sizes") || "";
+  const sizes = urlParams.get("sizes") || undefined;
   const price = urlParams.get("price");
   let minPrice: string | undefined, maxPrice: string | undefined;
   if (price !== "any") {

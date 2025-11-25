@@ -106,7 +106,7 @@ export const ProductsGrid = ({ products, id = "products", count }: Props) => {
               }
             >
               {products.map((product) => (
-                <Link to={`/product/${product.id}`} key={product.id}>
+                <Link to={`/product/${product.slug}`} key={product.id}>
                   <ProductCard
                     id={product.id}
                     name={product.title}

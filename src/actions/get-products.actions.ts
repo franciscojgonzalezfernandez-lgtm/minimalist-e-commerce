@@ -1,7 +1,7 @@
 import { teslaApi } from "@/api/TesloApi";
 import { products } from "@/data/products";
 import type { ProductsResponse } from "@/interfaces/Products.response";
-const ROUTE_TO_IMAGES = "/files/product/";
+export const ROUTE_TO_IMAGES = "/files/product/";
 
 export interface Options {
   offset: number;

@@ -4,32 +4,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, Minus, Plus } from "lucide-react";
 import { Link } from "react-router";
-import image1 from "@/assets/black-tshirt-1.png";
-import image2 from "@/assets/black-tshirt-2.png";
-import image3 from "@/assets/black-tshirt-3.png";
-import image4 from "@/assets/black-tshirt-4.png";
 import { CustomPhotoGallery } from "@/shop/components/CustomPhotoGallery";
-
-// Datos de ejemplo - en producción vendrían de tu API o base de datos
-const productData = {
-  id: "1",
-  name: "Tesla Essential T-Shirt del cris",
-  price: 35,
-  description:
-    "Minimalist and elegant t-shirt inspired in the futuristic design of Tesla. Premium quality cotton for an atemporal style. Comfortable fit perfect for everyday wear.",
-  images: [image1, image2, image3, image4],
-  colors: [
-    { name: "Black", value: "#000000" },
-    { name: "White", value: "#FFFFFF" },
-    { name: "Gray", value: "#A0A0A0" },
-  ],
-  sizes: ["XS", "S", "M", "L", "XL", "XXL"],
-  stock: 8,
-};
+import { useProduct } from "@/hooks/useProduct";
 
 export const ProductPage = () => {
-  const [selectedColor, setSelectedColor] = useState(0);
-  const [selectedSize, setSelectedSize] = useState("M");
+  const { data } = useProduct();
+  /* const [selectedColor, setSelectedColor] = useState(0); */
+  const [selectedSize, setSelectedSize] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
   const handleQuantityChange = (delta: number) => {
@@ -38,6 +19,7 @@ export const ProductPage = () => {
       setQuantity(newQuantity);
     }
   };
+  if (!data) return;
 
   return (
     <div className="min-h-screen bg-white">
@@ -57,35 +39,32 @@ export const ProductPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Image gallery */}
           <div className="space-y-4">
-            <CustomPhotoGallery
-              productName={productData.name}
-              images={productData.images}
-            />
+            <CustomPhotoGallery productName={data.title} images={data.images} />
           </div>
 
           {/* Product info */}
           <div className="space-y-8">
             <div>
               <h1 className="text-4xl font-bold text-balance mb-3">
-                {productData.name}
+                {data.title}
               </h1>
-              <p className="text-3xl font-semibold">${productData.price}</p>
+              <p className="text-3xl font-semibold">${data.price}</p>
             </div>
 
             {/* Stock indicator */}
             <div>
-              {productData.stock === 0 ? (
+              {data.stock === 0 ? (
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-full">
                   <div className="w-2 h-2 rounded-full bg-gray-400" />
                   <span className="text-sm font-medium text-gray-600">
                     Out of stock
                   </span>
                 </div>
-              ) : productData.stock <= 5 ? (
+              ) : data.stock <= 5 ? (
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-orange-50 rounded-full">
                   <div className="w-2 h-2 rounded-full bg-orange-500" />
                   <span className="text-sm font-medium text-orange-700">
-                    Only {productData.stock} left
+                    Only {data.stock} left
                   </span>
                 </div>
               ) : (
@@ -99,11 +78,11 @@ export const ProductPage = () => {
             </div>
 
             <p className="text-muted-foreground leading-relaxed">
-              {productData.description}
+              {data.description}
             </p>
 
-            {/* Color selector */}
-            <div className="space-y-4">
+            {/* Color selector TO DO*/}
+            {/* <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <label className="text-sm font-medium">Color</label>
                 <span className="text-sm text-muted-foreground">
@@ -129,13 +108,13 @@ export const ProductPage = () => {
                   </button>
                 ))}
               </div>
-            </div>
+            </div> */}
 
             {/* Size selector */}
             <div className="space-y-4">
               <label className="text-sm font-medium">Size</label>
               <div className="grid grid-cols-6 gap-2">
-                {productData.sizes.map((size) => (
+                {data.sizes.map((size) => (
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}
@@ -181,11 +160,13 @@ export const ProductPage = () => {
             <Button
               size="lg"
               className="w-full bg-black hover:bg-gray-800 text-white h-14 text-base disabled:bg-gray-300 disabled:cursor-not-allowed"
-              disabled={productData.stock === 0 || quantity > productData.stock}
+              disabled={
+                data.stock === 0 || quantity > data.stock || !selectedSize
+              }
             >
-              {productData.stock === 0
+              {data.stock === 0
                 ? "Out of stock"
-                : `Add to cart — $${productData.price * quantity}`}
+                : `Add to cart — $${data.price * quantity}`}
             </Button>
 
             {/* Product details */}

@@ -54,7 +54,7 @@ const FilterSidebar = () => {
   return (
     <div className="w-64 space-y-6">
       <div>
-        <h3 className="font-semibold text-lg mb-4">Filtros</h3>
+        <h3 className="font-semibold text-lg mb-4">Filters</h3>
       </div>
 
       {/* Sizes */}
