@@ -10,6 +10,8 @@ export const useProducts = () => {
   const page = urlParams.get("page") || 1;
   const offset = (Number(page) - 1) * Number(limit);
   const sizes = urlParams.get("sizes") || undefined;
+  const q = urlParams.get("query") || undefined;
+  // Price boilerplate
   const price = urlParams.get("price");
   let minPrice: string | undefined, maxPrice: string | undefined;
   if (price !== "any") {
@@ -20,10 +22,11 @@ export const useProducts = () => {
       maxPrice = price?.split("-")[1];
     }
   }
+
   return useQuery({
     queryKey: [
       "products",
-      { offset, limit, gender, sizes, minPrice, maxPrice },
+      { offset, limit, gender, sizes, minPrice, maxPrice, q },
     ],
     queryFn: () =>
       getProductsAction({
@@ -33,6 +36,7 @@ export const useProducts = () => {
         sizes,
         minPrice,
         maxPrice,
+        q,
       }),
     staleTime: 5 * 1000 * 60, // 5 minutes
   });

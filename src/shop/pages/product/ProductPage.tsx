@@ -69,7 +69,7 @@ export const ProductPage = () => {
                 </div>
               ) : (
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-50 rounded-full">
-                  <div className="w-4 h-2 rounded-full bg-green-500" />
+                  <div className="w-2 h-2 rounded-full bg-green-500" />
                   <span className="text-sm font-medium text-green-700">
                     {quantity} in stock
                   </span>

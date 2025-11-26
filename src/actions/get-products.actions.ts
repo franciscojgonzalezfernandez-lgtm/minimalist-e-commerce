@@ -10,6 +10,7 @@ export interface Options {
   sizes?: string;
   minPrice?: string;
   maxPrice?: string;
+  q?: string;
 }
 
 export const getProductsAction = async ({
@@ -19,6 +20,7 @@ export const getProductsAction = async ({
   sizes,
   minPrice,
   maxPrice,
+  q,
 }: Options): Promise<ProductsResponse> => {
   const { data } = await teslaApi.get<ProductsResponse>("/products", {
     params: {
@@ -28,6 +30,7 @@ export const getProductsAction = async ({
       sizes,
       minPrice,
       maxPrice,
+      q,
     },
   });
 
