@@ -10,7 +10,7 @@ export const HomePage = () => {
     <>
       <CustomJumboTron
         title="All products"
-        subtitle="Minimalist and elegant clothes inspired in the futuristic design of Tesla. Premium quality for an atemporal style"
+        subtitle="Minimalist and elegant clothes inspired in the futuristic design of 2043. Premium quality for an atemporal style"
         buttonText="See all the products"
         buttonTarget="productGrid"
       />

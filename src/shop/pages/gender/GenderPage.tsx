@@ -13,10 +13,15 @@ export const GenderPage = () => {
     <>
       <CustomJumboTron
         title={`The best products for ${gender}`}
-        subtitle="Minimalist and elegant clothes inspired in the futuristic design of Tesla. Premium quality for an atemporal style"
-        buttonText="See all the products"
+        subtitle="Minimalist and elegant clothes inspired in the futuristic design of 2043. Premium quality for an atemporal style"
+        buttonText="Go see the products"
+        buttonTarget="productsGrid"
       />
-      <ProductsGrid products={data?.products || []} count={data?.count || 0} />
+      <ProductsGrid
+        products={data?.products || []}
+        count={data?.count || 0}
+        id="productsGrid"
+      />
       <CustomPagination totalPages={data?.pages || 1} />
       <CustomFooter />
     </>
