@@ -1,7 +1,9 @@
-import React from "react";
+import { useAuthStore } from "@/auth/store/auth.store";
 import { Search, Bell, MessageSquare, Settings } from "lucide-react";
 
-const AdminHeader: React.FC = () => {
+const AdminHeader = () => {
+  const { user } = useAuthStore();
+
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4 h-18">
       <div className="flex items-center justify-between">
@@ -36,7 +38,7 @@ const AdminHeader: React.FC = () => {
           </button>
 
           <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-sm cursor-pointer hover:shadow-lg transition-shadow">
-            JG
+            {user?.fullName.split(" ").map((word) => word[0])}
           </div>
         </div>
       </div>

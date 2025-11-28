@@ -5,8 +5,11 @@ import { useRef, type KeyboardEvent } from "react";
 import { Link, useParams, useSearchParams } from "react-router";
 import { cn } from "@/lib/utils";
 import { CustomLogo } from "./CustomLogo";
+import { useAuthStore } from "@/auth/store/auth.store";
 const CustomHeader = () => {
   const { gender } = useParams();
+
+  const { user, logout, isAdmin } = useAuthStore();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("query") || "";
@@ -101,12 +104,22 @@ const CustomHeader = () => {
                 </span>
               )}
             </Button> */}
-            <Link to="/auth/login">
-              <Button variant="default"> Login </Button>
-            </Link>
-            <Link to="/admin">
-              <Button variant="destructive"> Admin </Button>
-            </Link>
+            {!user && (
+              <Link to="/auth/login">
+                <Button variant="default"> Login </Button>
+              </Link>
+            )}
+
+            {user && (
+              <Button variant="secondary" onClick={logout}>
+                Logout
+              </Button>
+            )}
+            {user?.roles.includes("admin") && (
+              <Link to="/admin">
+                <Button variant="destructive">Admin </Button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

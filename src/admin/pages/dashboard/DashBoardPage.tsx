@@ -3,6 +3,7 @@ import { AdminTitle } from "@/admin/components/AdminTitle";
 import Chart from "@/admin/components/Chart";
 import QuickActions from "@/admin/components/QuickActions";
 import StatCard from "@/admin/components/StatCard";
+import { useAuthStore } from "@/auth/store/auth.store";
 import {
   Users,
   DollarSign,
@@ -61,10 +62,11 @@ const performanceData = [
 ];
 
 export const DashBoardPage = () => {
+  const { user } = useAuthStore();
   return (
     <>
       {/* Welcome section */}
-      <AdminTitle name="Javi" />
+      <AdminTitle name={user?.fullName} />
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">

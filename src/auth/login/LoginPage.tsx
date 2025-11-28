@@ -4,17 +4,20 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CustomLogo } from "@/shop/components/CustomLogo";
-import { Link, navigate, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
-import { loginAction } from "../actions/login.actions";
+import { useAuthStore } from "../store/auth.store";
 
-export const LoginPage = ({
-  className,
-  ...props
-}: React.ComponentProps<"div">) => {
+export const LoginPage = () => {
+  const { user, token, login } = useAuthStore();
   const navigate = useNavigate();
   const [isFetching, setIsFetching] = useState(false);
+
+  if (user !== null || token !== null) {
+    navigate("/");
+  }
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     setIsFetching(true);
     event.preventDefault();
@@ -23,18 +26,17 @@ export const LoginPage = ({
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
-    try {
-      const { token } = await loginAction({ email, password });
-      localStorage.setItem("sessionToken", token);
+    const isLogged = await login(email, password);
+
+    if (isLogged) {
       navigate("/");
-    } catch (err) {
+    } else {
       toast.error("Email o contraseña incorrectos");
-      console.info(err);
+      setIsFetching(false);
     }
-    setIsFetching(false);
   };
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={"flex flex-col gap-6"}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
           <form className="p-6 md:p-8" onSubmit={handleSubmit}>

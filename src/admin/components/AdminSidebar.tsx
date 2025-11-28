@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Home,
   Users,
@@ -13,13 +12,15 @@ import {
 } from "lucide-react";
 import { CustomLogo } from "@/shop/components/CustomLogo";
 import { Link, useLocation } from "react-router";
+import { useAuthStore } from "@/auth/store/auth.store";
 
 interface SidebarProps {
   isCollapsed: boolean;
   onToggle: () => void;
 }
 
-const AdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
+export const AdminSidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
+  const { user } = useAuthStore();
   const { pathname } = useLocation();
 
   const isactiveRoute = (to: string) => {
@@ -89,13 +90,13 @@ const AdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
         <div className="p-4 border-t border-gray-200">
           <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer">
             <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
-              JG
+              {user?.fullName.split(" ").map((word) => word[0])}
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-gray-900 truncate">
-                Javi González
+                {user?.fullName}
               </p>
-              <p className="text-xs text-gray-500 truncate">Javi@company.com</p>
+              <p className="text-xs text-gray-500 truncate">{user?.email}</p>
             </div>
           </div>
         </div>
@@ -103,5 +104,3 @@ const AdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
     </div>
   );
 };
-
-export default AdminSidebar;
