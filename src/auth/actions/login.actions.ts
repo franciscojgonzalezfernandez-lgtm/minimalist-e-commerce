@@ -1,7 +1,5 @@
 import { teslaApi } from "@/api/TesloApi";
-import axios from "axios";
-import { data } from "react-router";
-import type { Login } from "../interfaces/Login.response";
+import type { Login } from "../interfaces/login.response";
 
 interface Options {
   email: string;

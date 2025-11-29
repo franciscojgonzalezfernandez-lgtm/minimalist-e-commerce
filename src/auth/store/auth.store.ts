@@ -1,6 +1,7 @@
 import type { User } from "@/interfaces/User";
 import { create } from "zustand";
 import { loginAction } from "../actions/login.actions";
+import { checkStatus } from "../actions/check-status.actions";
 
 type authStatus = "authenticated" | "not-authenticated" | "checking";
 
@@ -13,16 +14,7 @@ type AuthStore = {
   //methods
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
-};
-
-// aux
-const getInitials = (fullName: string): string => {
-  return fullName
-    .split(" ")
-    .map((word) => {
-      return word[0];
-    })
-    .join();
+  checkAuthStatus: () => Promise<void>;
 };
 
 export const useAuthStore = create<AuthStore>()((set, get) => ({
@@ -50,5 +42,15 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
   logout: () => {
     localStorage.removeItem("sessionToken");
     set({ user: null, token: null, authStatus: "not-authenticated" });
+  },
+
+  checkAuthStatus: async () => {
+    try {
+      const { user, token } = await checkStatus();
+      set({ user: user, token: token, authStatus: "authenticated" });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
+      set({ user: null, token: null, authStatus: "not-authenticated" });
+    }
   },
 }));
