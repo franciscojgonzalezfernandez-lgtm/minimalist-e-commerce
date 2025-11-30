@@ -14,7 +14,7 @@ type AuthStore = {
   //methods
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
-  checkAuthStatus: () => Promise<void>;
+  checkAuthStatus: () => Promise<boolean>;
 };
 
 export const useAuthStore = create<AuthStore>()((set, get) => ({
@@ -48,9 +48,11 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
     try {
       const { user, token } = await checkStatus();
       set({ user: user, token: token, authStatus: "authenticated" });
+      return true;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       set({ user: null, token: null, authStatus: "not-authenticated" });
+      return false;
     }
   },
 }));
