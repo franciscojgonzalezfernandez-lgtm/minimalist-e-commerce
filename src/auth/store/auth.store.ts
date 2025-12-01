@@ -11,6 +11,9 @@ type AuthStore = {
   token: string | null;
   authStatus: authStatus;
 
+  //getters
+  isAdmin: () => boolean;
+
   //methods
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
@@ -54,5 +57,9 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
       set({ user: null, token: null, authStatus: "not-authenticated" });
       return false;
     }
+  },
+
+  isAdmin: () => {
+    return get().user?.roles.includes("admin") || false;
   },
 }));

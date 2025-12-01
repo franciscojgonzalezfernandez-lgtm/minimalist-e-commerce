@@ -9,7 +9,7 @@ import { useAuthStore } from "@/auth/store/auth.store";
 const CustomHeader = () => {
   const { gender } = useParams();
 
-  const { user, logout, isAdmin } = useAuthStore();
+  const { authStatus, logout, isAdmin } = useAuthStore();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("query") || "";
@@ -104,18 +104,18 @@ const CustomHeader = () => {
                 </span>
               )}
             </Button> */}
-            {!user && (
+            {authStatus != "authenticated" && (
               <Link to="/auth/login">
                 <Button variant="default"> Login </Button>
               </Link>
             )}
 
-            {user && (
+            {authStatus == "authenticated" && (
               <Button variant="secondary" onClick={logout}>
                 Logout
               </Button>
             )}
-            {user?.roles.includes("admin") && (
+            {isAdmin() && (
               <Link to="/admin">
                 <Button variant="destructive">Admin </Button>
               </Link>
