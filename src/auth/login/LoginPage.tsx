@@ -39,7 +39,7 @@ export const LoginPage = () => {
               <div className="flex flex-col items-center text-center">
                 <CustomLogo />
                 <p className="text-balance text-muted-foreground">
-                  Login to your Tesla shop
+                  Login to your Javi shop
                 </p>
               </div>
               <div className="grid gap-2">
