@@ -42,7 +42,7 @@ export const RegisterPage = () => {
               <div className="flex flex-col items-center text-center">
                 <CustomLogo />
                 <p className="text-balance text-muted-foreground">
-                  Sign up to your Javi shop
+                  Sign up to your Javi's shop
                 </p>
               </div>
               <div className="grid gap-2">
