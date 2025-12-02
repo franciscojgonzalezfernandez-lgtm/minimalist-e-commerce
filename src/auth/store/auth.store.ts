@@ -2,6 +2,7 @@ import type { User } from "@/interfaces/User";
 import { create } from "zustand";
 import { loginAction } from "../actions/login.actions";
 import { checkStatus } from "../actions/check-status.actions";
+import { registerAction } from "../actions/register.actions";
 
 type authStatus = "authenticated" | "not-authenticated" | "checking";
 
@@ -18,6 +19,11 @@ type AuthStore = {
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
   checkAuthStatus: () => Promise<boolean>;
+  register: (
+    email: string,
+    password: string,
+    fullName: string
+  ) => Promise<boolean>;
 };
 
 export const useAuthStore = create<AuthStore>()((set, get) => ({
@@ -61,5 +67,19 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
 
   isAdmin: () => {
     return get().user?.roles.includes("admin") || false;
+  },
+
+  register: async (email: string, password: string, fullName: string) => {
+    try {
+      const data = await registerAction({ email, password, fullName });
+      localStorage.setItem("sessionToken", data.token);
+      set({ user: data.user, token: data.token, authStatus: "authenticated" });
+      return true;
+    } catch (err) {
+      console.info(err);
+      localStorage.removeItem("sessionToken");
+      set({ user: null, token: null, authStatus: "not-authenticated" });
+      return false;
+    }
   },
 }));

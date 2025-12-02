@@ -4,28 +4,52 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CustomLogo } from "@/shop/components/CustomLogo";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useState, type FormEvent } from "react";
+import { toast } from "sonner";
+import { useAuthStore } from "../store/auth.store";
 
-export const RegisterPage = ({
-  className,
-  ...props
-}: React.ComponentProps<"div">) => {
+export const RegisterPage = () => {
+  const [isFetching, setIsFetching] = useState(false);
+  const { register } = useAuthStore();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    setIsFetching(true);
+    event.preventDefault();
+
+    const formData = new FormData(event.target as HTMLFormElement);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const fullName = formData.get("name") as string;
+
+    const isRegistered = await register(email, password, fullName);
+
+    if (isRegistered) {
+      navigate("/");
+    } else {
+      toast.error("Email, password or full name");
+      setIsFetching(false);
+    }
+  };
+
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className="flex flex-col gap-6">
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form className="p-6 md:p-8" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <CustomLogo />
                 <p className="text-balance text-muted-foreground">
-                  Sign up to your Tesla shop
+                  Sign up to your Javi shop
                 </p>
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="name">Name</Label>
                 <Input
                   id="name"
+                  name="name"
                   type="text"
                   placeholder="Your full name"
                   required
@@ -35,6 +59,7 @@ export const RegisterPage = ({
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
                   placeholder="mail@example.com"
                   required
@@ -47,12 +72,13 @@ export const RegisterPage = ({
                 <Input
                   id="password"
                   type="password"
+                  name="password"
                   required
                   placeholder="password"
                 />
               </div>
-              <Button type="submit" className="w-full">
-                Login
+              <Button type="submit" className="w-full" disabled={isFetching}>
+                Sign up
               </Button>
               <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
                 <span className="relative z-10 bg-background px-2 text-muted-foreground">

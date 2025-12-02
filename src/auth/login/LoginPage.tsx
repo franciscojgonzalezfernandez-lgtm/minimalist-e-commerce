@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,13 +9,9 @@ import { toast } from "sonner";
 import { useAuthStore } from "../store/auth.store";
 
 export const LoginPage = () => {
-  const { user, token, login } = useAuthStore();
+  const { login } = useAuthStore();
   const navigate = useNavigate();
   const [isFetching, setIsFetching] = useState(false);
-
-  if (user !== null || token !== null) {
-    navigate("/");
-  }
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     setIsFetching(true);
