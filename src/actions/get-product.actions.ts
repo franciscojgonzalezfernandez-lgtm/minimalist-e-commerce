@@ -10,9 +10,10 @@ export const getProductAction = async ({ idSlug }: Props): Promise<Product> => {
   const { data } = await teslaApi.get<Product>(`/products/${idSlug}`);
 
   // image mapping
-  const newImages = data.images.map(
-    (image) => `${import.meta.env.VITE_API_URL}${ROUTE_TO_IMAGES}${image}`
-  );
+  const newImages = data.images.map((image) => {
+    if (image.includes("http")) return image;
+    return `${import.meta.env.VITE_API_URL}${ROUTE_TO_IMAGES}${image}`;
+  });
 
   return { ...data, images: newImages };
 };

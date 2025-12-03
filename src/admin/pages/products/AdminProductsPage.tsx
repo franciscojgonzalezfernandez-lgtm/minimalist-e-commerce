@@ -10,7 +10,7 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { useProducts } from "@/hooks/useProducts";
-import { PlusIcon } from "lucide-react";
+import { PencilIcon, PlusIcon } from "lucide-react";
 import { Link } from "react-router";
 
 export const AdminProductsPage = () => {
@@ -39,7 +39,7 @@ export const AdminProductsPage = () => {
                 <TableHead>Category</TableHead>
                 <TableHead>Inventary</TableHead>
                 <TableHead>Sizes</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -68,8 +68,14 @@ export const AdminProductsPage = () => {
                     <TableCell>{product.gender}</TableCell>
                     <TableCell>{product.stock} Stock</TableCell>
                     <TableCell>{product.sizes.join(", ")}</TableCell>
-                    <TableCell className="text-right">
-                      <Link to="tesla-shirt">Edit</Link>
+                    <TableCell className="text-center">
+                      <Link
+                        to={product.id}
+                        className="text-center flex align-middle items-center space-x-2 flex-row"
+                      >
+                        <PencilIcon className="w-4 h-4 text-blue-200" />{" "}
+                        <span>Edit</span>
+                      </Link>
                     </TableCell>
                   </TableRow>
                 );

@@ -1,10 +1,12 @@
 import { AdminTitle } from "@/admin/components/AdminTitle";
-import { useParams } from "react-router";
+import { Navigate, useParams } from "react-router";
 
 import { useState } from "react";
 import { X, Plus, Upload, Tag, SaveAll } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
+import { useProduct } from "@/hooks/useProduct";
+import { CustomLoader } from "@/components/CustomLoader";
 
 interface Product {
   id: string;
@@ -21,13 +23,8 @@ interface Product {
 
 export const AdminProductPage = () => {
   const { id } = useParams();
-
-  const productTitle = id === "new" ? "New product" : "Edit product";
-  const productSubtitle =
-    id === "new"
-      ? "You can create a product here"
-      : "You can edit the product here";
-
+  const { data, isLoading, isError } = useProduct();
+  console.log({ data });
   const [product, setProduct] = useState<Product>({
     id: "376e23ed-df37-4f88-8f84-4561da5c5d46",
     title: "Men's Raven Lightweight Hoodie",
@@ -49,6 +46,14 @@ export const AdminProductPage = () => {
 
   const [newTag, setNewTag] = useState("");
   const [dragActive, setDragActive] = useState(false);
+
+  if (isError) return <Navigate to="/admin/products" />;
+
+  const productTitle = id === "new" ? "New product" : "Edit product";
+  const productSubtitle =
+    id === "new"
+      ? "You can create a product here"
+      : "You can edit the product here";
 
   const availableSizes = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL"];
 
