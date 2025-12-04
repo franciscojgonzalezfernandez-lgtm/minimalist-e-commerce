@@ -1,4 +1,3 @@
-import type { Gender } from "./Products.response";
 import type { User } from "./User";
 
 export type size = "XS" | "S" | "M" | "L" | "XL" | "XXL";
