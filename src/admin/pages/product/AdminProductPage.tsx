@@ -24,7 +24,6 @@ interface Product {
 
 export const AdminProductPage = () => {
   const { data, isLoading, isError } = useProduct();
-  console.log({ data });
 
   const title = data?.id === "new" ? "New product" : "Edit product";
   const subtitle =
