@@ -145,12 +145,14 @@ export const ProductForm = ({ product, title, subtitle }: Props) => {
                     className={`${
                       errors.title
                         ? "border-red-700 focus:ring-red-700"
-                        : "focus:ring-blue-500"
-                    } w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2  focus:border-transparent transition-all duration-200`}
+                        : "focus:ring-blue-500 border-slate-300"
+                    } w-full px-4 py-3 border  rounded-lg focus:ring-2  focus:border-transparent transition-all duration-200`}
                     placeholder="Título del producto"
                   />
                   {errors.title && (
-                    <p className="text-red-700">This field is required</p>
+                    <p className="text-red-700 text-sm">
+                      This field is required
+                    </p>
                   )}
                 </div>
 
@@ -161,14 +163,22 @@ export const ProductForm = ({ product, title, subtitle }: Props) => {
                     </label>
                     <input
                       type="number"
-                      /* value={product.price}
-                      onChange={(e) =>
-                        handleInputChange("price", parseFloat(e.target.value))
-                      } */
-                      {...register("price")}
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                      placeholder="Precio del producto"
+                      {...register("price", {
+                        required: true,
+                        min: 0.1,
+                      })}
+                      className={`${
+                        errors.price
+                          ? "border-red-700 focus:ring-red-700"
+                          : "focus:ring-blue-500 border-slate-300"
+                      } w-full px-4 py-3 border  rounded-lg focus:ring-2  focus:border-transparent transition-all duration-200`}
+                      placeholder="Product price"
                     />
+                    {errors.price && (
+                      <p className="text-red-700 text-sm">
+                        Price has to be greater than 0.1
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -177,11 +187,20 @@ export const ProductForm = ({ product, title, subtitle }: Props) => {
                     </label>
                     <input
                       type="number"
-                      {...register("stock")}
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      {...register("stock", {
+                        required: true,
+                      })}
+                      className={`${
+                        errors.stock
+                          ? "border-red-700 focus:ring-red-700"
+                          : "focus:ring-blue-500 border-slate-300"
+                      } w-full px-4 py-3 border  rounded-lg focus:ring-2  focus:border-transparent transition-all duration-200`}
                       placeholder="Product stock"
                     />
                   </div>
+                  {errors.stock && (
+                    <p className="text-red-700 text-sm">Stock is required</p>
+                  )}
                 </div>
 
                 <div>
@@ -190,12 +209,23 @@ export const ProductForm = ({ product, title, subtitle }: Props) => {
                   </label>
                   <input
                     type="text"
-                    /* value={product.slug}
-                    onChange={(e) => handleInputChange("slug", e.target.value)} */
-                    {...register("slug")}
-                    className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    {...register("slug", {
+                      required: true,
+                      validate: (value) =>
+                        !/\s/.test(value) || "Slug can't contain whitespaces",
+                    })}
+                    className={`${
+                      errors.slug
+                        ? "border-red-700 focus:ring-red-700"
+                        : "focus:ring-blue-500 border-slate-300"
+                    } w-full px-4 py-3 border  rounded-lg focus:ring-2  focus:border-transparent transition-all duration-200`}
                     placeholder="Product slug"
                   />
+                  {errors.slug && (
+                    <p className="text-red-700 text-sm">
+                      {errors.slug.message || "Slug is required"}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -203,10 +233,6 @@ export const ProductForm = ({ product, title, subtitle }: Props) => {
                     Product gender
                   </label>
                   <select
-                    /* value={product.gender}
-                    onChange={(e) =>
-                      handleInputChange("gender", e.target.value)
-                    } */
                     {...register("gender")}
                     className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   >
@@ -222,15 +248,22 @@ export const ProductForm = ({ product, title, subtitle }: Props) => {
                     Product description
                   </label>
                   <textarea
-                    /* value={product.description}
-                    onChange={(e) =>
-                      handleInputChange("description", e.target.value)
-                    } */
-                    {...register("description")}
+                    {...register("description", {
+                      required: true,
+                    })}
                     rows={5}
-                    className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
-                    placeholder="Descripción del producto"
+                    className={`${
+                      errors.description
+                        ? "border-red-700 focus:ring-red-700"
+                        : "focus:ring-blue-500 border-slate-300"
+                    } w-full px-4 py-3 border  rounded-lg focus:ring-2  focus:border-transparent transition-all duration-200`}
+                    placeholder="Product description"
                   />
+                  {errors.description && (
+                    <p className="text-red-700 text-sm">
+                      Description is required
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
