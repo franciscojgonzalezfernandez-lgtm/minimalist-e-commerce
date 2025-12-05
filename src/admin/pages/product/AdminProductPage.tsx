@@ -23,7 +23,7 @@ interface Product {
 }
 
 export const AdminProductPage = () => {
-  const { data, isLoading, isError } = useProduct();
+  const { data, isLoading, isError, handleSubmitProduct } = useProduct();
 
   const title = data?.id === "new" ? "New product" : "Edit product";
   const subtitle =
@@ -37,7 +37,14 @@ export const AdminProductPage = () => {
   if (isLoading) return <CustomLoader />;
 
   if (data) {
-    return <ProductForm product={data} title={title} subtitle={subtitle} />;
+    return (
+      <ProductForm
+        product={data}
+        title={title}
+        subtitle={subtitle}
+        onSubmit={handleSubmitProduct}
+      />
+    );
   }
 
   return <Navigate to="/admin/products" />;

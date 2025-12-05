@@ -12,11 +12,12 @@ interface Props {
   product: Product;
   title: string;
   subtitle: string;
+  onSubmit: (productLike: Partial<Product>) => Promise<void>;
 }
 
 const availableSizes: size[] = ["XS", "S", "M", "L", "XL", "XXL"];
 
-export const ProductForm = ({ product, title, subtitle }: Props) => {
+export const ProductForm = ({ product, title, subtitle, onSubmit }: Props) => {
   const [dragActive, setDragActive] = useState(false);
   const {
     register,
@@ -51,10 +52,6 @@ export const ProductForm = ({ product, title, subtitle }: Props) => {
       "https://placehold.co/250x250",
     ],
   });
-
-  const onSubmit = (productLike: Product) => {
-    console.log({ productLike });
-  };
 
   const tagInputRef = useRef<HTMLInputElement>(null);
 
