@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
-import type { Product } from "@/interfaces/Product";
+import type { Product, size } from "@/interfaces/Product";
 import { X, SaveAll, Tag, Plus, Upload } from "lucide-react";
 import React, { useState } from "react";
 import { Link } from "react-router";
 import { AdminTitle } from "./AdminTitle";
 
 import { useForm } from "react-hook-form";
+import { cn } from "@/lib/utils";
 
 interface Props {
   product: Product;
@@ -13,7 +14,7 @@ interface Props {
   subtitle: string;
 }
 
-const availableSizes = ["XS", "S", "M", "L", "XL", "XXL"];
+const availableSizes: size[] = ["XS", "S", "M", "L", "XL", "XXL"];
 
 export const ProductForm = ({ product, title, subtitle }: Props) => {
   const [newTag, setNewTag] = useState("");
@@ -22,10 +23,15 @@ export const ProductForm = ({ product, title, subtitle }: Props) => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    getValues,
+    watch,
   } = useForm({
     defaultValues: product,
   });
-  console.log({ errors });
+
+  const selectedSizes = watch("sizes");
+  console.log(selectedSizes);
 
   const [product2, setProduct] = useState<Product>({
     id: "376e23ed-df37-4f88-8f84-4561da5c5d46",
@@ -67,20 +73,21 @@ export const ProductForm = ({ product, title, subtitle }: Props) => {
     }));
   };
 
-  const addSize = (size: string) => {
-    if (!product.sizes.includes(size)) {
-      setProduct((prev) => ({
-        ...prev,
-        sizes: [...prev.sizes, size],
-      }));
+  const addSize = (size: size) => {
+    const actualValues = getValues("sizes");
+    if (!actualValues.includes(size)) {
+      setValue("sizes", [...actualValues, size]);
     }
   };
 
-  const removeSize = (sizeToRemove: string) => {
-    setProduct((prev) => ({
-      ...prev,
-      sizes: prev.sizes.filter((size) => size !== sizeToRemove),
-    }));
+  const removeSize = (size: size) => {
+    const actualValues = getValues("sizes");
+    if (actualValues.includes(size)) {
+      setValue(
+        "sizes",
+        actualValues.filter((elem) => elem !== size)
+      );
+    }
   };
 
   const handleDrag = (e: React.DragEvent) => {
@@ -276,15 +283,21 @@ export const ProductForm = ({ product, title, subtitle }: Props) => {
 
               <div className="space-y-4">
                 <div className="flex flex-wrap gap-2">
-                  {product.sizes.map((size) => (
+                  {availableSizes.map((size) => (
                     <span
                       key={size}
-                      className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 border border-blue-200"
+                      className={cn(
+                        "inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 border border-blue-200",
+                        {
+                          hidden: !selectedSizes.includes(size),
+                        }
+                      )}
                     >
                       {size}
                       <button
                         onClick={() => removeSize(size)}
-                        className="ml-2 text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                        className="ml-2 text-blue-600 hover:text-blue-800 transition-colors duration-200 cursor-pointer"
+                        type="button"
                       >
                         <X className="h-3 w-3" />
                       </button>
@@ -300,9 +313,10 @@ export const ProductForm = ({ product, title, subtitle }: Props) => {
                     <button
                       key={size}
                       onClick={() => addSize(size)}
-                      disabled={product.sizes.includes(size)}
+                      disabled={selectedSizes.includes(size)}
+                      type="button"
                       className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-200 ${
-                        product.sizes.includes(size)
+                        selectedSizes.includes(size)
                           ? "bg-slate-100 text-slate-400 cursor-not-allowed"
                           : "bg-slate-200 text-slate-700 hover:bg-slate-300 cursor-pointer"
                       }`}
