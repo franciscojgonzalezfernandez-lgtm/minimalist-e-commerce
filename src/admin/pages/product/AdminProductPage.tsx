@@ -28,7 +28,7 @@ export const AdminProductPage = () => {
   const title = data?.id === "new" ? "New product" : "Edit product";
   const subtitle =
     data?.id === "new"
-      ? "You can create a product here"
+      ? "You can create a new product here"
       : "You can edit the product here";
 
   if (isError) {
