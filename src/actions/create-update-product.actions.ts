@@ -1,7 +1,7 @@
 import { teslaApi } from "@/api/TesloApi";
 import type { Product } from "@/interfaces/Product";
 
-export const createUpdateProductaction = async (
+export const createUpdateProductAction = async (
   productLike: Partial<Product>
 ): Promise<Product> => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

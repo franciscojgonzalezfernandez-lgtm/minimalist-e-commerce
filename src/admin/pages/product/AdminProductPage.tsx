@@ -1,31 +1,31 @@
-import { AdminTitle } from "@/admin/components/AdminTitle";
-import { Navigate, useParams } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 
-import { useState } from "react";
-import { X, Plus, Upload, Tag, SaveAll } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
 import { useProduct } from "@/hooks/useProduct";
-import { CustomLoader } from "@/components/CustomLoader";
+import type { Product } from "@/interfaces/Product";
+import { toast } from "sonner";
 import { ProductForm } from "@/admin/components/ProductForm";
-
-interface Product {
-  id: string;
-  title: string;
-  price: number;
-  description: string;
-  slug: string;
-  stock: number;
-  sizes: string[];
-  gender: string;
-  tags: string[];
-  images: string[];
-}
+import { CustomLoader } from "@/components/CustomLoader";
 
 export const AdminProductPage = () => {
-  const { data, isLoading, isError, handleSubmitProduct } = useProduct();
+  const { data, isLoading, isError, mutation } = useProduct();
+  const navigate = useNavigate();
 
   const title = data?.id === "new" ? "New product" : "Edit product";
+
+  const handleSumbit = async (productLike: Partial<Product>) => {
+    await mutation.mutateAsync(productLike, {
+      onSuccess: (data) => {
+        toast("Product updated correctly", {
+          position: "top-right",
+        });
+        navigate(`admin/products/${data.id}`);
+      },
+      onError: (error) => {
+        console.log(error);
+        toast.error("Something went wrong updating the product");
+      },
+    });
+  };
   const subtitle =
     data?.id === "new"
       ? "You can create a product here"
@@ -42,7 +42,7 @@ export const AdminProductPage = () => {
         product={data}
         title={title}
         subtitle={subtitle}
-        onSubmit={handleSubmitProduct}
+        onSubmit={handleSumbit}
       />
     );
   }

@@ -34,25 +34,6 @@ export const ProductForm = ({ product, title, subtitle, onSubmit }: Props) => {
   const appliedTags = watch("tags");
   const currentStock = watch("stock");
 
-  const [product2, setProduct] = useState<Product>({
-    id: "376e23ed-df37-4f88-8f84-4561da5c5d46",
-    title: "Men's Raven Lightweight Hoodie",
-    price: 115,
-    description:
-      "Introducing the Tesla Raven Collection. The Men's Raven Lightweight Hoodie has a premium, relaxed silhouette made from a sustainable bamboo cotton blend. The hoodie features subtle thermoplastic polyurethane Tesla logos across the chest and on the sleeve with a french terry interior for versatility in any season. Made from 70% bamboo and 30% cotton.",
-    slug: "men_raven_lightweight_hoodie",
-    stock: 10,
-    sizes: ["XS", "S", "M", "L", "XL", "XXL"],
-    gender: "men",
-    tags: ["hoodie"],
-    images: [
-      "https://placehold.co/250x250",
-      "https://placehold.co/250x250",
-      "https://placehold.co/250x250",
-      "https://placehold.co/250x250",
-    ],
-  });
-
   const tagInputRef = useRef<HTMLInputElement>(null);
 
   const addTag = (): void => {
