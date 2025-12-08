@@ -10,7 +10,7 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { useProducts } from "@/hooks/useProducts";
-import { DeleteIcon, PencilIcon, PlusIcon, TrashIcon } from "lucide-react";
+import { PencilIcon, PlusIcon, TrashIcon } from "lucide-react";
 import { Link } from "react-router";
 
 export const AdminProductsPage = () => {
@@ -77,7 +77,7 @@ export const AdminProductsPage = () => {
                         <span>Edit</span>
                       </Link>
                       <Link
-                        to={product.id}
+                        to={`${product.id}?delete=true`}
                         className="text-center flex align-middle items-center space-x-2 flex-row"
                       >
                         <TrashIcon className="w-4 h-4 text-blue-200" />{" "}

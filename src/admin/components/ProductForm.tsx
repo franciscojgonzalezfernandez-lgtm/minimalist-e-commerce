@@ -37,9 +37,9 @@ export const ProductForm = ({
     defaultValues: product,
   });
 
-  const selectedSizes = watch("sizes");
+  const selectedSizes = watch("sizes") || [];
   const appliedTags = watch("tags") || [];
-  const currentStock = watch("stock");
+  const currentStock = watch("stock") || 0;
 
   const tagInputRef = useRef<HTMLInputElement>(null);
 
@@ -55,11 +55,12 @@ export const ProductForm = ({
   };
 
   const removeTag = (tagToRemove: string) => {
-    if (appliedTags.includes(tagToRemove));
-    setValue(
-      "tags",
-      appliedTags.filter((elem) => elem !== tagToRemove)
-    );
+    if (appliedTags.includes(tagToRemove)) {
+      setValue(
+        "tags",
+        appliedTags.filter((elem) => elem !== tagToRemove)
+      );
+    }
   };
 
   const addSize = (size: size) => {
@@ -208,7 +209,8 @@ export const ProductForm = ({
                     {...register("slug", {
                       required: true,
                       validate: (value) =>
-                        !/\s/.test(value) || "Slug can't contain whitespaces",
+                        !/\s/.test(value?.toString() || "") ||
+                        "Slug can't contain whitespaces",
                     })}
                     className={`${
                       errors.slug
@@ -412,7 +414,7 @@ export const ProductForm = ({
                   Current images
                 </h3>
                 <div className="grid grid-cols-2 gap-3">
-                  {product.images.map((image, index) => (
+                  {product.images?.map((image, index) => (
                     <div key={index} className="relative group">
                       <div className="aspect-square bg-slate-100 rounded-lg border border-slate-200 flex items-center justify-center">
                         <img
@@ -475,7 +477,7 @@ export const ProductForm = ({
                     Images
                   </span>
                   <span className="text-sm text-slate-600">
-                    {product.images.length} images
+                    {product.images?.length || 0} images
                   </span>
                 </div>
 
