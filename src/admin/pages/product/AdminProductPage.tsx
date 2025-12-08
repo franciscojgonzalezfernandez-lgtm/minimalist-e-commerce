@@ -7,9 +7,9 @@ import { ProductForm } from "@/admin/components/ProductForm";
 import { CustomLoader } from "@/components/CustomLoader";
 
 export const AdminProductPage = () => {
-  const { data, isLoading, isError, mutation } = useProduct();
+  const { data, isLoading, isError, mutation, deleteProductMutation } =
+    useProduct();
   const navigate = useNavigate();
-
   const title = data?.id === "new" ? "New product" : "Edit product";
 
   const handleSumbit = async (productLike: Partial<Product>) => {
@@ -24,6 +24,26 @@ export const AdminProductPage = () => {
       onError: (error) => {
         console.log(error);
         toast.error("Something went wrong updating the product", {
+          dismissible: true,
+          position: "top-right",
+          closeButton: true,
+        });
+      },
+    });
+  };
+
+  const handleDelete = async (id: string) => {
+    await deleteProductMutation.mutateAsync(id, {
+      onSuccess: (data) => {
+        toast.success("Product deleted correctly", {
+          position: "top-right",
+          closeButton: true,
+        });
+        navigate(`/admin/products`);
+      },
+      onError: (error) => {
+        console.log(error);
+        toast.error("Something went wrong deleting the product", {
           dismissible: true,
           position: "top-right",
           closeButton: true,
@@ -49,6 +69,7 @@ export const AdminProductPage = () => {
         subtitle={subtitle}
         onSubmit={handleSumbit}
         isFetching={mutation.isPending}
+        onDelete={handleDelete}
       />
     );
   }

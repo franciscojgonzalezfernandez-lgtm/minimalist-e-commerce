@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import type { Product, size } from "@/interfaces/Product";
-import { X, SaveAll, Tag, Plus, Upload } from "lucide-react";
+import { X, SaveAll, Tag, Plus, Upload, TrashIcon } from "lucide-react";
 import React, { useRef, useState } from "react";
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { AdminTitle } from "./AdminTitle";
 
 import { useForm } from "react-hook-form";
@@ -14,6 +14,7 @@ interface Props {
   subtitle: string;
   onSubmit: (productLike: Partial<Product>) => Promise<void>;
   isFetching: boolean;
+  onDelete: (id: string) => Promise<void>;
 }
 
 const availableSizes: size[] = ["XS", "S", "M", "L", "XL", "XXL"];
@@ -24,8 +25,13 @@ export const ProductForm = ({
   subtitle,
   onSubmit,
   isFetching,
+  onDelete,
 }: Props) => {
   const [dragActive, setDragActive] = useState(false);
+  const [urlParams] = useSearchParams();
+
+  const isDelete = urlParams.get("delete");
+
   const {
     register,
     handleSubmit,
@@ -118,6 +124,20 @@ export const ProductForm = ({
             <SaveAll className="w-4 h-4" />
             Save changes
           </Button>
+
+          {isDelete && (
+            <Button
+              type="button"
+              disabled={isFetching}
+              variant="destructive"
+              onClick={() => {
+                onDelete(product.id || "");
+              }}
+            >
+              <TrashIcon className="w-4 h-4" />
+              Delete product
+            </Button>
+          )}
         </div>
       </div>
 

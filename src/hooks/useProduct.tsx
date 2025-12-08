@@ -1,4 +1,5 @@
 import { createUpdateProductAction } from "@/actions/create-update-product.actions";
+import { deleteProductAction } from "@/actions/delete-product.actions";
 import { getProductAction } from "@/actions/get-product.actions";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router";
@@ -16,7 +17,6 @@ export const useProduct = () => {
   const mutation = useMutation({
     mutationFn: createUpdateProductAction,
     onSuccess: (productReceived) => {
-      console.log("everything ok", productReceived);
       //cache invalidation
       queryClient.invalidateQueries({ queryKey: ["products"] });
       // QueryData update.
@@ -24,5 +24,17 @@ export const useProduct = () => {
     },
   });
 
-  return { ...query, mutation };
+  const deleteProductMutation = useMutation({
+    mutationFn: deleteProductAction,
+    onSuccess: (data) => {
+      if (data) {
+        //cache invalidation
+        queryClient.invalidateQueries({ queryKey: ["products"] });
+        // QueryData update.
+        queryClient.setQueryData(["product", { idSlug }], null);
+      }
+    },
+  });
+
+  return { ...query, mutation, deleteProductMutation };
 };
