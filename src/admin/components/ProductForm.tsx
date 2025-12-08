@@ -13,11 +13,18 @@ interface Props {
   title: string;
   subtitle: string;
   onSubmit: (productLike: Partial<Product>) => Promise<void>;
+  isFetching: boolean;
 }
 
 const availableSizes: size[] = ["XS", "S", "M", "L", "XL", "XXL"];
 
-export const ProductForm = ({ product, title, subtitle, onSubmit }: Props) => {
+export const ProductForm = ({
+  product,
+  title,
+  subtitle,
+  onSubmit,
+  isFetching,
+}: Props) => {
   const [dragActive, setDragActive] = useState(false);
   const {
     register,
@@ -99,14 +106,14 @@ export const ProductForm = ({ product, title, subtitle, onSubmit }: Props) => {
       <div className="flex justify-between items-center">
         <AdminTitle greet={title} subtitle={subtitle} />
         <div className="flex justify-end mb-10 gap-4">
-          <Button variant="outline">
+          <Button variant="outline" type="button">
             <Link to="/admin/products" className="flex items-center gap-2">
               <X className="w-4 h-4" />
               Cancel
             </Link>
           </Button>
 
-          <Button>
+          <Button type="submit" disabled={isFetching}>
             <SaveAll className="w-4 h-4" />
             Save changes
           </Button>

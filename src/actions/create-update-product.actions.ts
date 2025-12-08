@@ -1,6 +1,5 @@
 import { teslaApi } from "@/api/TesloApi";
 import type { Product } from "@/interfaces/Product";
-
 export const createUpdateProductAction = async (
   productLike: Partial<Product>
 ): Promise<Product> => {

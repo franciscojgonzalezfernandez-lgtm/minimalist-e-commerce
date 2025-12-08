@@ -48,6 +48,7 @@ export const AdminProductPage = () => {
         title={title}
         subtitle={subtitle}
         onSubmit={handleSumbit}
+        isFetching={mutation.isPending}
       />
     );
   }
