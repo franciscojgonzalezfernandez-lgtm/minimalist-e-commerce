@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { cn } from "@/lib/utils";
 
 interface Props {
-  product: Product;
+  product: Partial<Product>;
   title: string;
   subtitle: string;
   onSubmit: (productLike: Partial<Product>) => Promise<void>;
@@ -38,7 +38,7 @@ export const ProductForm = ({
   });
 
   const selectedSizes = watch("sizes");
-  const appliedTags = watch("tags");
+  const appliedTags = watch("tags") || [];
   const currentStock = watch("stock");
 
   const tagInputRef = useRef<HTMLInputElement>(null);
@@ -63,14 +63,14 @@ export const ProductForm = ({
   };
 
   const addSize = (size: size) => {
-    const actualValues = getValues("sizes");
+    const actualValues = getValues("sizes") || [];
     if (!actualValues.includes(size)) {
       setValue("sizes", [...actualValues, size]);
     }
   };
 
   const removeSize = (size: size) => {
-    const actualValues = getValues("sizes");
+    const actualValues = getValues("sizes") || [];
     if (actualValues.includes(size)) {
       setValue(
         "sizes",
