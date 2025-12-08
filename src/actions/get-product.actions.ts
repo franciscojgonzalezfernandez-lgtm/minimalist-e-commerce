@@ -2,15 +2,15 @@ import { teslaApi } from "@/api/TesloApi";
 import type { Product } from "@/interfaces/Product";
 import { ROUTE_TO_IMAGES } from "./get-products.actions";
 
-const DUMMY_PRODUCT: Product = {
-  id: "",
+const DUMMY_PRODUCT: Partial<Product> = {
+  id: "new",
   title: "",
   price: 0,
   description: "",
   slug: "",
   stock: 0,
   sizes: [],
-  gender: undefined,
+  gender: "men",
   tags: [],
   images: [],
 };
@@ -19,7 +19,9 @@ interface Props {
   idSlug: string;
 }
 
-export const getProductAction = async ({ idSlug }: Props): Promise<Product> => {
+export const getProductAction = async ({
+  idSlug,
+}: Props): Promise<Partial<Product>> => {
   if (idSlug === "new") return DUMMY_PRODUCT;
   const { data } = await teslaApi.get<Product>(`/products/${idSlug}`);
 

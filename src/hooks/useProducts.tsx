@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams, useSearchParams } from "react-router";
 
 export const useProducts = () => {
-  const [urlParams, setUrlParams] = useSearchParams();
+  const [urlParams] = useSearchParams();
   const { gender } = useParams();
 
   const limit = Number(urlParams.get("limit")) || 9;
