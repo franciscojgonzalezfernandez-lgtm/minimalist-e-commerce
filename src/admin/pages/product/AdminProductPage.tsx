@@ -15,14 +15,19 @@ export const AdminProductPage = () => {
   const handleSumbit = async (productLike: Partial<Product>) => {
     await mutation.mutateAsync(productLike, {
       onSuccess: (data) => {
-        toast("Product updated correctly", {
+        toast.success("Product updated correctly", {
           position: "top-right",
+          closeButton: true,
         });
         navigate(`/admin/products/${data.id}`);
       },
       onError: (error) => {
         console.log(error);
-        toast.error("Something went wrong updating the product");
+        toast.error("Something went wrong updating the product", {
+          dismissible: true,
+          position: "top-right",
+          closeButton: true,
+        });
       },
     });
   };
