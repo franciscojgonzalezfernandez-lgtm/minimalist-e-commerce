@@ -29,8 +29,9 @@ export const ProductForm = ({
 }: Props) => {
   const [dragActive, setDragActive] = useState(false);
   const [urlParams] = useSearchParams();
-
   const isDelete = urlParams.get("delete");
+
+  const [files, setFiles] = useState<File[]>([]);
 
   const {
     register,
@@ -101,11 +102,20 @@ export const ProductForm = ({
     e.stopPropagation();
     setDragActive(false);
     const files = e.dataTransfer.files;
+
+    if (!files) return;
+
+    setFiles((prev) => [...prev, ...Array.from(files)]);
+
     console.log(files);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
+    if (!files) return;
+
+    setFiles((prev) => [...prev, ...Array.from(files)]);
+
     console.log(files);
   };
   return (
@@ -443,7 +453,10 @@ export const ProductForm = ({
                           className="w-full h-full object-cover rounded-lg"
                         />
                       </div>
-                      <button className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                      <button
+                        type="button"
+                        className="cursor-pointer absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                      >
                         <X className="h-3 w-3" />
                       </button>
                       <p className="mt-1 text-xs text-slate-600 truncate">
@@ -453,6 +466,36 @@ export const ProductForm = ({
                   ))}
                 </div>
               </div>
+              {/* New images */}
+              {files.length > 0 && (
+                <div className="mt-6 space-y-3">
+                  <h3 className="text-sm font-medium text-slate-700">
+                    Images pending to upload
+                  </h3>
+                  <div className="grid grid-cols-2 gap-3">
+                    {files?.map((file, index) => (
+                      <div key={index} className="relative group">
+                        <div className="aspect-square bg-slate-100 rounded-lg border border-slate-200 flex items-center justify-center">
+                          <img
+                            src={URL.createObjectURL(file)}
+                            alt="Product"
+                            className="w-full h-full object-cover rounded-lg"
+                          />
+                        </div>
+                        <button
+                          type="button"
+                          className="cursor-pointer absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                        <p className="mt-1 text-xs text-slate-600 truncate">
+                          {URL.createObjectURL(file)}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Product Status */}
