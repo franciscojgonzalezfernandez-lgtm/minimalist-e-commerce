@@ -18,7 +18,7 @@ export const AdminProductPage = () => {
         toast("Product updated correctly", {
           position: "top-right",
         });
-        navigate(`admin/products/${data.id}`);
+        navigate(`/admin/products/${data.id}`);
       },
       onError: (error) => {
         console.log(error);

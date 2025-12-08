@@ -15,6 +15,7 @@ export const createUpdateProductAction = async (
   const { data } = await teslaApi<Product>({
     method: isCreating ? "POST" : "PATCH",
     url: isCreating ? "/products" : `/products/${id}`,
+    data: { ...restProps },
   });
 
   return {
