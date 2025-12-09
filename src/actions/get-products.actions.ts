@@ -1,5 +1,4 @@
 import { teslaApi } from "@/api/TesloApi";
-import { products } from "@/data/products";
 import type { ProductsResponse } from "@/interfaces/Products.response";
 export const ROUTE_TO_IMAGES = "/files/product/";
 
@@ -37,9 +36,10 @@ export const getProductsAction = async ({
   /* Normalize data */
   const newProductsWithImageUrl = data.products.map((product) => ({
     ...product,
-    images: product.images.map(
-      (image) => `${import.meta.env.VITE_API_URL}${ROUTE_TO_IMAGES}${image}`
-    ),
+    images: product.images.map((image) => {
+      if (image.includes("http")) return image;
+      return `${import.meta.env.VITE_API_URL}${ROUTE_TO_IMAGES}${image}`;
+    }),
   }));
 
   return { ...data, products: newProductsWithImageUrl };

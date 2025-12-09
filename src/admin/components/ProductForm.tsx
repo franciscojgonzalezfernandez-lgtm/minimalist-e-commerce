@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import type { Product, size } from "@/interfaces/Product";
 import { X, SaveAll, Tag, Plus, Upload, TrashIcon } from "lucide-react";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import { AdminTitle } from "./AdminTitle";
 
@@ -36,6 +36,10 @@ export const ProductForm = ({
   const [dragActive, setDragActive] = useState(false);
   const [urlParams] = useSearchParams();
   const isDelete = urlParams.get("delete");
+
+  useEffect(() => {
+    setValue("files", []);
+  }, [product]);
 
   const {
     register,

@@ -20,7 +20,10 @@ export const useProduct = () => {
       //cache invalidation
       queryClient.invalidateQueries({ queryKey: ["products"] });
       // QueryData update.
-      queryClient.setQueryData(["product", { idSlug }], productReceived);
+      queryClient.setQueryData(
+        ["product", { idSlug: productReceived.slug }],
+        productReceived
+      );
     },
   });
 
