@@ -12,12 +12,18 @@ interface Props {
   product: Partial<Product>;
   title: string;
   subtitle: string;
-  onSubmit: (productLike: Partial<Product>) => Promise<void>;
+  onSubmit: (
+    productLike: Partial<Product> & { files?: File[] }
+  ) => Promise<void>;
   isFetching: boolean;
   onDelete: (id: string) => Promise<void>;
 }
 
 const availableSizes: size[] = ["XS", "S", "M", "L", "XL", "XXL"];
+
+interface FormInputs extends Product {
+  files: File[];
+}
 
 export const ProductForm = ({
   product,
@@ -31,8 +37,6 @@ export const ProductForm = ({
   const [urlParams] = useSearchParams();
   const isDelete = urlParams.get("delete");
 
-  const [files, setFiles] = useState<File[]>([]);
-
   const {
     register,
     handleSubmit,
@@ -40,13 +44,14 @@ export const ProductForm = ({
     setValue,
     getValues,
     watch,
-  } = useForm({
+  } = useForm<FormInputs>({
     defaultValues: product,
   });
 
   const selectedSizes = watch("sizes") || [];
   const appliedTags = watch("tags") || [];
   const currentStock = watch("stock") || 0;
+  const currentFiles = watch("files") || [];
 
   const tagInputRef = useRef<HTMLInputElement>(null);
 
@@ -105,8 +110,7 @@ export const ProductForm = ({
 
     if (!files) return;
 
-    setFiles((prev) => [...prev, ...Array.from(files)]);
-
+    setValue("files", [...currentFiles, ...Array.from(files)]);
     console.log(files);
   };
 
@@ -114,7 +118,7 @@ export const ProductForm = ({
     const files = e.target.files;
     if (!files) return;
 
-    setFiles((prev) => [...prev, ...Array.from(files)]);
+    setValue("files", [...currentFiles, ...Array.from(files)]);
 
     console.log(files);
   };
@@ -467,13 +471,13 @@ export const ProductForm = ({
                 </div>
               </div>
               {/* New images */}
-              {files.length > 0 && (
+              {currentFiles.length > 0 && (
                 <div className="mt-6 space-y-3">
                   <h3 className="text-sm font-medium text-slate-700">
                     Images pending to upload
                   </h3>
                   <div className="grid grid-cols-2 gap-3">
-                    {files?.map((file, index) => (
+                    {currentFiles?.map((file, index) => (
                       <div key={index} className="relative group">
                         <div className="aspect-square bg-slate-100 rounded-lg border border-slate-200 flex items-center justify-center">
                           <img

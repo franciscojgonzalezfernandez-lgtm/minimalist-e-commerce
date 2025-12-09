@@ -1,10 +1,12 @@
 import { teslaApi } from "@/api/TesloApi";
 import type { Product } from "@/interfaces/Product";
 export const createUpdateProductAction = async (
-  productLike: Partial<Product>
+  productLike: Partial<Product> & { files?: File[] }
 ): Promise<Product> => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { id, user, images = [], ...restProps } = productLike;
+  const { id, user, images = [], ...restProps, files = [] } = productLike;
+
+  console.log({ files });
 
   const isCreating = id === "new";
 

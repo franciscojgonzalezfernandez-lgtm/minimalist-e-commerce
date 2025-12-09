@@ -12,7 +12,9 @@ export const AdminProductPage = () => {
   const navigate = useNavigate();
   const title = data?.id === "new" ? "New product" : "Edit product";
 
-  const handleSumbit = async (productLike: Partial<Product>) => {
+  const handleSumbit = async (
+    productLike: Partial<Product> & { files?: File[] }
+  ) => {
     await mutation.mutateAsync(productLike, {
       onSuccess: (data) => {
         toast.success("Product updated correctly", {
@@ -34,7 +36,7 @@ export const AdminProductPage = () => {
 
   const handleDelete = async (id: string) => {
     await deleteProductMutation.mutateAsync(id, {
-      onSuccess: (data) => {
+      onSuccess: () => {
         toast.success("Product deleted correctly", {
           position: "top-right",
           closeButton: true,
