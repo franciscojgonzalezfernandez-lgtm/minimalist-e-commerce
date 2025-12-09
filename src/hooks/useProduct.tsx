@@ -24,6 +24,10 @@ export const useProduct = () => {
         ["product", { idSlug: productReceived.slug }],
         productReceived
       );
+      queryClient.setQueryData(
+        ["product", { id: productReceived.id }],
+        productReceived
+      );
     },
   });
 
@@ -33,8 +37,6 @@ export const useProduct = () => {
       if (data) {
         //cache invalidation
         queryClient.invalidateQueries({ queryKey: ["products"] });
-        // QueryData update.
-        queryClient.setQueryData(["product", { idSlug }], null);
       }
     },
   });

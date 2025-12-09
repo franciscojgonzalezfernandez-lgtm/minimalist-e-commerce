@@ -56,6 +56,7 @@ export const ProductForm = ({
   const appliedTags = watch("tags") || [];
   const currentStock = watch("stock") || 0;
   const currentFiles = watch("files") || [];
+  const currentImages = watch("images") || [];
 
   const tagInputRef = useRef<HTMLInputElement>(null);
 
@@ -125,6 +126,17 @@ export const ProductForm = ({
     setValue("files", [...currentFiles, ...Array.from(files)]);
 
     console.log(files);
+  };
+
+  const removeImage = (image: string) => {
+    console.log(image);
+    console.log(product.images);
+    setValue(
+      "images",
+      currentImages.filter((elem) => {
+        return elem !== image;
+      })
+    );
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -452,7 +464,7 @@ export const ProductForm = ({
                   Current images
                 </h3>
                 <div className="grid grid-cols-2 gap-3">
-                  {product.images?.map((image, index) => (
+                  {currentImages.map((image, index) => (
                     <div key={index} className="relative group">
                       <div className="aspect-square bg-slate-100 rounded-lg border border-slate-200 flex items-center justify-center">
                         <img
@@ -463,6 +475,9 @@ export const ProductForm = ({
                       </div>
                       <button
                         type="button"
+                        onClick={() => {
+                          removeImage(image);
+                        }}
                         className="cursor-pointer absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                       >
                         <X className="h-3 w-3" />

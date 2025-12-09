@@ -12,7 +12,7 @@ export const AdminProductPage = () => {
   const navigate = useNavigate();
   const title = data?.id === "new" ? "New product" : "Edit product";
 
-  const handleSumbit = async (
+  const handleSubmit = async (
     productLike: Partial<Product> & { files?: File[] }
   ) => {
     await mutation.mutateAsync(productLike, {
@@ -69,7 +69,7 @@ export const AdminProductPage = () => {
         product={data}
         title={title}
         subtitle={subtitle}
-        onSubmit={handleSumbit}
+        onSubmit={handleSubmit}
         isFetching={mutation.isPending}
         onDelete={handleDelete}
       />
