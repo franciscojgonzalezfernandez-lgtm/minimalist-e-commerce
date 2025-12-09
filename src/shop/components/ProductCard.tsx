@@ -49,7 +49,7 @@ const ProductCard = ({
               variant="outline"
               className="opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-primary hover:text-primary-foreground border-primary/20 text-xs px-4 py-2 h-8"
             >
-              Agregar al carrito
+              View details
             </Button>
           </div>
         </div>
