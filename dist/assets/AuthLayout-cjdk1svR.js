@@ -1,0 +1,1 @@
+import{j as e,O as s}from"./index-CTaqW3AW.js";const m=()=>e.jsx("div",{className:"flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10",children:e.jsx("div",{className:"w-full max-w-sm md:max-w-3xl",children:e.jsx(s,{})})});export{m as AuthLayout,m as default};
