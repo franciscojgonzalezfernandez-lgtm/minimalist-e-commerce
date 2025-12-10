@@ -42,7 +42,7 @@ const ProductCard = ({
           </div>
 
           <div className="flex items-center justify-between">
-            <p className="font-semibold text-lg">${price}</p>
+            <p className="font-semibold text-lg">{price} CHF</p>
             <Button
               size="sm"
               variant="outline"

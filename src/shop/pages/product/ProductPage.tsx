@@ -54,7 +54,7 @@ export const ProductPage = () => {
               <h1 className="text-4xl font-bold text-balance mb-3">
                 {data.title}
               </h1>
-              <p className="text-3xl font-semibold">${data.price}</p>
+              <p className="text-3xl font-semibold">{data.price} CHF</p>
             </div>
 
             {/* Stock indicator */}

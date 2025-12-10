@@ -78,7 +78,7 @@ const FilterSidebar = () => {
               onClick={() => handleChangePrice("any")}
             />
             <Label htmlFor="priceAny" className="text-sm cursor-pointer">
-              Cualquier precio
+              Any price
             </Label>
           </div>
           <div className="flex items-center space-x-2">
@@ -89,7 +89,7 @@ const FilterSidebar = () => {
               onClick={() => handleChangePrice("0-50")}
             />
             <Label htmlFor="price1" className="text-sm cursor-pointer">
-              $0 - $50
+              0CHF - 50CHF
             </Label>
           </div>
           <div className="flex items-center space-x-2">
@@ -100,7 +100,7 @@ const FilterSidebar = () => {
               onClick={() => handleChangePrice("50-100")}
             />
             <Label htmlFor="price2" className="text-sm cursor-pointer">
-              $50 - $100
+              50CHF - 100CHF
             </Label>
           </div>
           <div className="flex items-center space-x-2">
@@ -111,7 +111,7 @@ const FilterSidebar = () => {
               onClick={() => handleChangePrice("100-200")}
             />
             <Label htmlFor="price3" className="text-sm cursor-pointer">
-              $100 - $200
+              100CHF - 200CHF
             </Label>
           </div>
           <div className="flex items-center space-x-2">
@@ -122,7 +122,7 @@ const FilterSidebar = () => {
               onClick={() => handleChangePrice("200+")}
             />
             <Label htmlFor="price4" className="text-sm cursor-pointer">
-              $200+
+              200+ CHF
             </Label>
           </div>
         </RadioGroup>
