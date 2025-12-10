@@ -6,11 +6,12 @@ import { ChevronLeft, Minus, Plus } from "lucide-react";
 import { Link } from "react-router";
 import { CustomPhotoGallery } from "@/shop/components/CustomPhotoGallery";
 import { useProduct } from "@/hooks/useProduct";
+import type { size } from "@/interfaces/Product";
 
 export const ProductPage = () => {
   const { data } = useProduct();
   /* const [selectedColor, setSelectedColor] = useState(0); */
-  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedSize, setSelectedSize] = useState<size | null>(null);
   const [quantity, setQuantity] = useState(1);
 
   const handleQuantityChange = (delta: number) => {
@@ -39,7 +40,12 @@ export const ProductPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Image gallery */}
           <div className="space-y-4">
-            <CustomPhotoGallery productName={data.title} images={data.images} />
+            {data.title && data.images && (
+              <CustomPhotoGallery
+                productName={data.title}
+                images={data.images}
+              />
+            )}
           </div>
 
           {/* Product info */}
@@ -60,7 +66,7 @@ export const ProductPage = () => {
                     Out of stock
                   </span>
                 </div>
-              ) : data.stock <= 5 ? (
+              ) : data.stock && data.stock <= 5 ? (
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-orange-50 rounded-full">
                   <div className="w-2 h-2 rounded-full bg-orange-500" />
                   <span className="text-sm font-medium text-orange-700">
@@ -111,24 +117,26 @@ export const ProductPage = () => {
             </div> */}
 
             {/* Size selector */}
-            <div className="space-y-4">
-              <label className="text-sm font-medium">Size</label>
-              <div className="grid grid-cols-6 gap-2">
-                {data.sizes.map((size) => (
-                  <button
-                    key={size}
-                    onClick={() => setSelectedSize(size)}
-                    className={`py-3 text-sm font-medium border rounded-lg transition-colors ${
-                      selectedSize === size
-                        ? "bg-black text-white border-black"
-                        : "bg-white text-foreground border-gray-300 hover:border-black"
-                    }`}
-                  >
-                    {size}
-                  </button>
-                ))}
+            {data.sizes && (
+              <div className="space-y-4">
+                <label className="text-sm font-medium">Size</label>
+                <div className="grid grid-cols-6 gap-2">
+                  {data.sizes.map((size) => (
+                    <button
+                      key={size}
+                      onClick={() => setSelectedSize(size)}
+                      className={`py-3 text-sm font-medium border rounded-lg transition-colors ${
+                        selectedSize === size
+                          ? "bg-black text-white border-black"
+                          : "bg-white text-foreground border-gray-300 hover:border-black"
+                      }`}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Quantity selector */}
             <div className="space-y-4">
@@ -157,17 +165,19 @@ export const ProductPage = () => {
             </div>
 
             {/* Add to cart button */}
-            <Button
-              size="lg"
-              className="w-full bg-black hover:bg-gray-800 text-white h-14 text-base disabled:bg-gray-300 disabled:cursor-not-allowed"
-              disabled={
-                data.stock === 0 || quantity > data.stock || !selectedSize
-              }
-            >
-              {data.stock === 0
-                ? "Out of stock"
-                : `Add to cart — $${data.price * quantity}`}
-            </Button>
+            {data.stock && data.price && (
+              <Button
+                size="lg"
+                className="w-full bg-black hover:bg-gray-800 text-white h-14 text-base disabled:bg-gray-300 disabled:cursor-not-allowed"
+                disabled={
+                  data.stock === 0 || quantity > data.stock || !selectedSize
+                }
+              >
+                {data.stock === 0
+                  ? "Out of stock"
+                  : `Add to cart — $${data.price * quantity}`}
+              </Button>
+            )}
 
             {/* Product details */}
             <div className="pt-8 border-t border-gray-200 space-y-4">

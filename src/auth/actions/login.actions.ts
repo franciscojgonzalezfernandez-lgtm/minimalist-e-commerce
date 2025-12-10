@@ -11,7 +11,7 @@ export const loginAction = async ({
   password,
 }: Options): Promise<Login> => {
   try {
-    const { data, status } = await teslaApi.post<Login>(
+    const { data } = await teslaApi.post<Login>(
       `${import.meta.env.VITE_API_URL}/auth/login`,
       {
         email,

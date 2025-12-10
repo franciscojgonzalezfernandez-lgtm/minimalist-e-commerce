@@ -30,7 +30,7 @@ export const CustomPhotoGallery = ({ images, productName }: Props) => {
             }`}
           >
             <img
-              src={images[index]}
+              src={image}
               alt={`${productName} view ${index + 1}`}
               className="w-full h-full object-cover"
             />
