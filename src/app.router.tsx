@@ -17,74 +17,77 @@ import {
 const AuthLayout = lazy(() => import("./auth/layout/AuthLayout.tsx"));
 const AdminLayout = lazy(() => import("./admin/layout/AdminLayout.tsx"));
 
-export const appRouter = createBrowserRouter([
-  // Public routes.
-  {
-    path: "/",
-    element: <ShopLayout />,
-    children: [
-      {
-        index: true,
-        element: <HomePage />,
-      },
-      {
-        path: "/product/:idSlug",
-        element: <ProductPage />,
-      },
-      {
-        path: "/gender/:gender",
-        element: <GenderPage />,
-      },
-    ],
-  },
-  // Auth routes
-  {
-    path: "/auth",
-    element: (
-      <NotAuthenticatedRoute>
-        <AuthLayout />
-      </NotAuthenticatedRoute>
-    ),
-    children: [
-      {
-        index: true,
-        element: <Navigate to="/auth/login" />,
-      },
-      {
-        path: "login",
-        element: <LoginPage />,
-      },
-      {
-        path: "register",
-        element: <RegisterPage />,
-      },
-    ],
-  },
-  //Admin routes
-  {
-    path: "/admin",
-    element: (
-      <AdminRoute>
-        <AdminLayout />
-      </AdminRoute>
-    ),
-    children: [
-      {
-        index: true,
-        element: <DashBoardPage />,
-      },
-      {
-        path: "products",
-        element: <AdminProductsPage />,
-      },
-      {
-        path: "products/:idSlug",
-        element: <AdminProductPage />,
-      },
-    ],
-  },
-  {
-    path: "*",
-    element: <Navigate to="/" />,
-  },
-]);
+export const appRouter = createBrowserRouter(
+  [
+    // Public routes.
+    {
+      path: "/",
+      element: <ShopLayout />,
+      children: [
+        {
+          index: true,
+          element: <HomePage />,
+        },
+        {
+          path: "/product/:idSlug",
+          element: <ProductPage />,
+        },
+        {
+          path: "/gender/:gender",
+          element: <GenderPage />,
+        },
+      ],
+    },
+    // Auth routes
+    {
+      path: "/auth",
+      element: (
+        <NotAuthenticatedRoute>
+          <AuthLayout />
+        </NotAuthenticatedRoute>
+      ),
+      children: [
+        {
+          index: true,
+          element: <Navigate to="/auth/login" />,
+        },
+        {
+          path: "login",
+          element: <LoginPage />,
+        },
+        {
+          path: "register",
+          element: <RegisterPage />,
+        },
+      ],
+    },
+    //Admin routes
+    {
+      path: "/admin",
+      element: (
+        <AdminRoute>
+          <AdminLayout />
+        </AdminRoute>
+      ),
+      children: [
+        {
+          index: true,
+          element: <DashBoardPage />,
+        },
+        {
+          path: "products",
+          element: <AdminProductsPage />,
+        },
+        {
+          path: "products/:idSlug",
+          element: <AdminProductPage />,
+        },
+      ],
+    },
+    {
+      path: "*",
+      element: <Navigate to="/" />,
+    },
+  ],
+  { basename: "/minimalist-e-commerce" }
+);
