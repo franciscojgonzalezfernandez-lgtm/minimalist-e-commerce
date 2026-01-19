@@ -44,5 +44,3 @@ npm run dev
 | 85    | 94                  |  93 | 91 |
 
 Built with ❤️ using 2026's production-ready frontend stack
-
-👈 Live Demo | 📖 Project Explanation
